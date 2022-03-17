@@ -1,0 +1,37 @@
+name: fimii
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.11.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  scoped_model: ^1.0.1
+  get_it: ^4.0.2
+  splashscreen: ^1.3.5
+  http: ^0.13.4
+  intl: ^0.16.1
+  share_plus: ^3.0.4
+  flutter_map: ^0.12.0
+  latlong:
+  animated_splash_screen: ^1.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^1.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/img/
+    - assets/flags/
+    - weather-icons/
