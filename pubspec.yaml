@@ -1,5 +1,5 @@
 name: fimii
-description: A new Flutter project.
+description: A Flutter project for football clubs matching.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
@@ -35,3 +35,12 @@ flutter:
     - assets/img/
     - assets/flags/
     - weather-icons/
+
+
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+          weight: 300
+        - asset: assets/fonts/Montserrat-Bold.ttf
+          weight: 600

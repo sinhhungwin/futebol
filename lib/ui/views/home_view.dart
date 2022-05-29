@@ -1,12 +1,14 @@
 import 'package:fimii/scoped_models/home_model.dart';
-import 'package:fimii/ui/views/countries_view.dart';
-import 'package:fimii/ui/views/map_view.dart';
-import 'package:fimii/ui/views/your_aqi_view.dart';
+import 'package:fimii/ui/views/post_view.dart';
+import 'package:fimii/ui/views/account_view.dart';
+import 'package:fimii/ui/views/matching_view.dart';
 import 'package:flutter/material.dart';
 
 import 'base_view.dart';
 
 class HomeView extends StatelessWidget {
+  HomeView({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BaseView<HomeModel>(
@@ -15,16 +17,16 @@ class HomeView extends StatelessWidget {
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
-                label: 'Your AQI',
+                icon: Icon(Icons.sports_soccer),
+                label: 'Matching',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.location_city),
-                label: 'Cities',
+                icon: Icon(Icons.web_outlined),
+                label: 'News',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.map),
-                label: 'Map',
+                icon: Icon(Icons.account_circle),
+                label: 'Account',
               ),
             ],
             currentIndex: model.selectedIndex,
@@ -35,9 +37,9 @@ class HomeView extends StatelessWidget {
         ),);
   }
 
-  List<Widget> _screenOptions = <Widget>[
-    YourAqiView(),
-    CountriesView(),
-    MapView()
+  final List<Widget> _screenOptions = <Widget>[
+    MatchView(),
+    const PostView(),
+    AccountView()
   ];
 }

@@ -1,6 +1,6 @@
 import 'package:fimii/enums/view_state.dart';
 import 'package:fimii/scoped_models/cities_model.dart';
-import 'package:fimii/ui/views/your_aqi_view.dart';
+import 'package:fimii/ui/views/matching_view.dart';
 import 'package:flutter/material.dart';
 
 import 'base_view.dart';
@@ -40,7 +40,7 @@ class CitiesView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => YourAqiView(
+                        builder: (context) => MatchView(
                           city: model.data.data[index].city,
                           state: state,
                           country: country,

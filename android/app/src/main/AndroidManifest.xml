@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fimii">
    <application
-        android:label="fimii"
+        android:label="Futebol"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
