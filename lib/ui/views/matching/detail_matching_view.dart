@@ -1,25 +1,16 @@
 import 'package:fimii/enums/view_state.dart';
-import 'package:fimii/scoped_models/your_aqi_model.dart';
+import 'package:fimii/scoped_models/matching_model.dart';
+import 'package:fimii/ui/views/base_view.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import "package:latlong/latlong.dart" as latLng;
-
-import 'base_view.dart';
 
 class DetailMatchView extends StatelessWidget {
-  final f = DateFormat('EEEE dd,MMM', "en_US");
-
-  String city, state, country;
-  latLng.LatLng coordinates;
-
-  DetailMatchView({Key key, this.city, this.state, this.country, this.coordinates})
-      : super(key: key);
+  const DetailMatchView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<YourAqiModel>(
+    return BaseView<MatchingModel>(
         onModelReady: (model) {
-          model.onModelReady(city, state, country, coordinates);
+          model.onModelReady();
         },
         builder: (context, child, model) => Scaffold(
           appBar: AppBar(
@@ -33,18 +24,18 @@ class DetailMatchView extends StatelessWidget {
         ));
   }
 
-  Widget viewOptions(YourAqiModel model, context) {
+  Widget viewOptions(MatchingModel model, context) {
     switch (model.state) {
-      case ViewState.Busy:
+      case ViewState.busy:
         return const Center(child: CircularProgressIndicator());
 
-      case ViewState.Error:
+      case ViewState.error:
         return Text(
           model.error.toString(),
           style: const TextStyle(color: Colors.red),
         );
 
-      case ViewState.Retrieved:
+      case ViewState.retrieved:
         return SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -175,7 +166,7 @@ class DetailMatchView extends StatelessWidget {
             ),
           ),
         );
-      case ViewState.Idle:
+      case ViewState.idle:
       // TODO: Handle this case.
         break;
     }

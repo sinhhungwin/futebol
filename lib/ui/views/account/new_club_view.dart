@@ -1,72 +1,62 @@
 import 'package:fimii/enums/view_state.dart';
-import 'package:fimii/scoped_models/your_aqi_model.dart';
-import 'package:fimii/ui/views/detail_matching_view.dart';
+import 'package:fimii/scoped_models/new_club_model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import "package:latlong/latlong.dart" as latLng;
-
-import 'base_view.dart';
+import '../base_view.dart';
 
 class NewClubView extends StatelessWidget {
-  final f = DateFormat('EEEE dd,MMM', "en_US");
-
-  String city, state, country;
-  latLng.LatLng coordinates;
-
-  NewClubView({Key key, this.city, this.state, this.country, this.coordinates})
-      : super(key: key);
+  const NewClubView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Widget viewOptions(YourAqiModel model, context) {
+    Widget viewOptions(NewClubModel model, context) {
       switch (model.state) {
-        case ViewState.Busy:
+        case ViewState.busy:
           return const Center(child: CircularProgressIndicator());
 
-        case ViewState.Error:
+        case ViewState.error:
           return Text(
             model.error.toString(),
             style: const TextStyle(color: Colors.red),
           );
 
-        case ViewState.Retrieved:
+        case ViewState.retrieved:
           return SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(28.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text('Name'),
-                  TextField(),
-                  SizedBox(
+                  const Text('Name'),
+                  const TextField(),
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text('Description'),
-                  TextField(),
-                  SizedBox(
+                  const Text('Description'),
+                  const TextField(),
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text('Level: 369'),
-                  SizedBox(
+                  const Text('Level: 369'),
+                  const SizedBox(
                     height: 5,
                   ),
 
-                  Text(
+                  const Text(
                       'Average: Good at handling the ball, passing, moving and good stamina'),
 
                   // TODO: Slider here
 
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
 
                   // Age Range
-                  Text('Age Range'),
+                  const Text('Age Range'),
 
                   // TODO: Age Radio Here
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: const [
                       Text('U16'),
                       Text('U19'),
                       Text('U23'),
@@ -76,19 +66,19 @@ class NewClubView extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
 
                   ElevatedButton(
                     onPressed: () {},
-                    child: Text('Create new club'),
+                    child: const Text('Create new club'),
                   ),
                 ],
               ),
             ),
           );
-        case ViewState.Idle:
+        case ViewState.idle:
           // TODO: Handle this case.
           break;
       }
@@ -96,18 +86,14 @@ class NewClubView extends StatelessWidget {
       return Container();
     }
 
-    return BaseView<YourAqiModel>(
+    return BaseView<NewClubModel>(
         onModelReady: (model) {
-          model.onModelReady(city, state, country, coordinates);
+          model.onModelReady();
         },
         builder: (context, child, model) => Scaffold(
               appBar: AppBar(
                 title: const Text('Create new club'),
               ),
-              // floatingActionButton: FloatingActionButton(
-              //   onPressed: () {},
-              //   child: const Icon(Icons.plus_one),
-              // ),
               body: viewOptions(model, context),
             ));
   }

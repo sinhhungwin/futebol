@@ -2,7 +2,7 @@ import 'package:fimii/enums/view_state.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class BaseModel extends Model {
-  ViewState _state = ViewState.Idle;
+  ViewState _state = ViewState.idle;
   ViewState get state => _state;
 
   void setState(ViewState newState) {

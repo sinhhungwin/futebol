@@ -1,7 +1,7 @@
 import 'package:fimii/scoped_models/home_model.dart';
-import 'package:fimii/ui/views/post_view.dart';
-import 'package:fimii/ui/views/account_view.dart';
-import 'package:fimii/ui/views/matching_view.dart';
+import 'package:fimii/ui/views/matching/matching_view.dart';
+import 'package:fimii/ui/views/post/post_view.dart';
+import 'package:fimii/ui/views/account/account_view.dart';
 import 'package:flutter/material.dart';
 
 import 'base_view.dart';
@@ -22,7 +22,7 @@ class HomeView extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.web_outlined),
-                label: 'News',
+                label: 'Post',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle),
@@ -40,6 +40,6 @@ class HomeView extends StatelessWidget {
   final List<Widget> _screenOptions = <Widget>[
     MatchView(),
     const PostView(),
-    AccountView()
+    const AccountView()
   ];
 }

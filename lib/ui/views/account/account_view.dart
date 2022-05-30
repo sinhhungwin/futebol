@@ -1,15 +1,15 @@
-import 'package:fimii/scoped_models/map_model.dart';
-import 'package:fimii/ui/views/new_club_view.dart';
+import 'package:fimii/scoped_models/account_model.dart';
+import 'package:fimii/ui/views/account/new_club_view.dart';
 import 'package:flutter/material.dart';
 
-import 'base_view.dart';
+import '../base_view.dart';
 
 class AccountView extends StatelessWidget {
   const AccountView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<MapModel>(
+    return BaseView<AccountModel>(
         builder: (context, child, model) => Scaffold(
               floatingActionButton: FloatingActionButton(
                 onPressed: () {},
