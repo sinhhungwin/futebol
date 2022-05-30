@@ -1,4 +1,5 @@
 import 'package:fimii/scoped_models/map_model.dart';
+import 'package:fimii/ui/views/new_club_view.dart';
 import 'package:flutter/material.dart';
 
 import 'base_view.dart';
@@ -12,7 +13,7 @@ class AccountView extends StatelessWidget {
         builder: (context, child, model) => Scaffold(
               floatingActionButton: FloatingActionButton(
                 onPressed: () {},
-                child: const Icon(Icons.settings),
+                child: const Text('Sign\nOut'),
               ),
               body: SafeArea(
                 child: Padding(
@@ -72,12 +73,17 @@ class AccountView extends StatelessWidget {
                             'Club',
                             style: Theme.of(context).textTheme.headline2,
                           ),
-                          Row(
-                            children: [
-                              Text("Create new club",
-                                   style: Theme.of(context).textTheme.headline2,),
-                              const Icon(Icons.plus_one)
-                            ],
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => NewClubView()));
+                            },
+                            child: Row(
+                              children: [
+                                Text("Create new club",
+                                     style: Theme.of(context).textTheme.headline2,),
+                                const Icon(Icons.plus_one)
+                              ],
+                            ),
                           )
                         ],
                       ),
