@@ -1,6 +1,7 @@
 import 'package:fimii/enums/view_state.dart';
 import 'package:fimii/scoped_models/new_club_model.dart';
 import 'package:flutter/material.dart';
+import 'package:cupertino_radio_choice/cupertino_radio_choice.dart';
 import '../base_view.dart';
 
 class NewClubView extends StatelessWidget {
@@ -36,7 +37,7 @@ class NewClubView extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text('Level: 369'),
+                  Text('Level: ${model.level.toInt()}'),
                   const SizedBox(
                     height: 5,
                   ),
@@ -44,27 +45,18 @@ class NewClubView extends StatelessWidget {
                   const Text(
                       'Average: Good at handling the ball, passing, moving and good stamina'),
 
-                  // TODO: Slider here
-
+                  Slider(value: model.level, onChanged: model.onLevelChanged, min: model.minLevel, max: model.maxLevel,),
                   const SizedBox(
                     height: 20,
                   ),
 
                   // Age Range
                   const Text('Age Range'),
-
-                  // TODO: Age Radio Here
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text('U16'),
-                      Text('U19'),
-                      Text('U23'),
-                      Text('U28'),
-                      Text('U32'),
-                      Text('U50'),
-                    ],
-                  ),
+                  const SizedBox(height: 5,),
+                  CupertinoRadioChoice(
+                      choices: NewClubModel.ageRanges,
+                      onChange: (selectedGender) {},
+                      initialKeyValue: model.selectedAgeRange),
 
                   const SizedBox(
                     height: 20,

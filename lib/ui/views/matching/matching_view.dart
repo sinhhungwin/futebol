@@ -1,6 +1,8 @@
+import 'package:cupertino_radio_choice/cupertino_radio_choice.dart';
 import 'package:fimii/enums/view_state.dart';
 import 'package:fimii/scoped_models/matching_model.dart';
 import 'package:fimii/ui/views/matching/detail_matching_view.dart';
+import 'package:fimii/ui/views/matching/new_match_view.dart';
 import 'package:flutter/material.dart';
 import '../base_view.dart';
 
@@ -182,22 +184,81 @@ class MatchView extends StatelessWidget {
           model.onModelReady();
         },
         builder: (context, child, model) => Scaffold(
-              appBar: AppBar(
-                title: Row(
+          endDrawer: Drawer(
+            // Add a ListView to the drawer. This ensures the user can scroll
+            // through the options in the drawer if there isn't enough vertical
+            // space to fit everything.
+            child: ListView(
+              // Important: Remove any padding from the ListView.
+              padding: const EdgeInsets.all(8.0),
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Matching...'),
-                    Row(
-                      children: const [
-                        Icon(Icons.filter_alt),
-                        Text('Filtering (0)'),
-                      ],
-                    )
+                    const Text('Filter (0)'),
+                    TextButton(onPressed: () {}, child: const Text('Cancel filters'),),
                   ],
                 ),
+                const SizedBox(height: 15,),
+                const Text('Pitch'),
+                CupertinoRadioChoice(
+                    choices: model.filterPitchChoices,
+                    onChange: model.onFilterPitchValueChanged,
+                    initialKeyValue: model.filterPitchValue),
+
+                const SizedBox(height: 15,),
+                const Text('Day of Week'),
+                CupertinoRadioChoice(
+                    choices: model.dayOfWeekChoices,
+                    onChange: model.onDayOfWeekValueChanged,
+                    initialKeyValue: model.dayOfWeekValue),
+
+
+                const SizedBox(height: 15,),
+                const Text('Distance'),
+                CupertinoRadioChoice(
+                    choices: model.distanceChoices,
+                    onChange: model.onDistanceValueChanged,
+                    initialKeyValue: model.distanceValue),
+
+
+                const SizedBox(height: 15,),
+                const Text('District'),
+                CupertinoRadioChoice(
+                    choices: model.districtChoices,
+                    onChange: model.onDistrictValueChanged,
+                    initialKeyValue: model.distanceValue),
+
+
+                const SizedBox(height: 15,),
+                const Text('Date'),
+                CupertinoRadioChoice(
+                    choices: model.dateChoices,
+                    onChange: model.onDateValueChanged,
+                    initialKeyValue: model.dateValue),
+
+                const SizedBox(height: 25,),
+                ElevatedButton(onPressed: () {}, child: const Text('Apply'))
+
+              ],
+            ),
+          ),
+              appBar: AppBar(
+                actions: [
+                  Builder(
+                    builder: (context) => IconButton(
+                      icon: const Icon(Icons.filter_alt),
+                      onPressed: () => Scaffold.of(context).openEndDrawer(),
+                      tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                    ),
+                  ),
+                ],
+                title: const Text('Matching...'),
               ),
               floatingActionButton: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const NewMatchView()));
+                },
                 child: const Icon(Icons.plus_one),
               ),
               body: viewOptions(model, context),
