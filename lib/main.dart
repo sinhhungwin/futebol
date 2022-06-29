@@ -2,19 +2,31 @@
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:fimii/style.dart';
+import 'package:fimii/ui/views/auth/sign_up_view.dart';
 import 'package:fimii/ui/views/home_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'service_locator.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
   setupLocator();
 
-  runApp(const MyApp());
+  // Obtain shared preferences.
+  final prefs = await SharedPreferences.getInstance();
+  String email = prefs.getString('email');
+
+  bool isLoggedIn = email?.isNotEmpty ?? false;
+
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
+  final bool isLoggedIn;
+
+  const MyApp({Key key, this.isLoggedIn}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -44,7 +56,7 @@ class MyApp extends StatelessWidget {
       ),
       home: AnimatedSplashScreen(
         splash: 'assets/img/logo.png',
-        nextScreen: HomeView(),
+        nextScreen: isLoggedIn ? HomeView() : SignUpView(),
       ),
     );
   }

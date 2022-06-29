@@ -1,4 +1,5 @@
 import 'package:fimii/scoped_models/account_model.dart';
+import 'package:fimii/scoped_models/auth_model.dart';
 import 'package:fimii/scoped_models/home_model.dart';
 import 'package:fimii/scoped_models/map_model.dart';
 import 'package:fimii/scoped_models/matching_model.dart';
@@ -20,4 +21,5 @@ void setupLocator() {
   locator.registerFactory<MatchingModel>(() => MatchingModel());
   locator.registerFactory<NewClubModel>(() => NewClubModel());
   locator.registerFactory<PostModel>(() => PostModel());
+  locator.registerFactory<AuthModel>(() => AuthModel());
 }

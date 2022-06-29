@@ -1,6 +1,7 @@
 import 'package:fimii/scoped_models/account_model.dart';
 import 'package:fimii/ui/views/account/new_club_view.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../base_view.dart';
 
@@ -10,9 +11,10 @@ class AccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<AccountModel>(
+      onModelReady: (model) => model.onModelReady(),
         builder: (context, child, model) => Scaffold(
               floatingActionButton: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () => model.signOut(context) ,
                 child: const Text('Sign\nOut'),
               ),
               body: SafeArea(
@@ -34,7 +36,7 @@ class AccountView extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                   image: NetworkImage(
-                                      'https://i.pinimg.com/564x/11/19/0e/11190ec93e892a6e8bbbc85bea332148.jpg'),
+                                      'https://media.istockphoto.com/vectors/missing-image-of-a-person-placeholder-vector-id1288129985?k=20&m=1288129985&s=612x612&w=0&h=OHfZHfKj0oqIDMl5f_oRqH13MHiB63nUmySYILbWbjE='),
                                   fit: BoxFit.cover,
                                 )),
                           ),
@@ -44,13 +46,22 @@ class AccountView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Hector Bellerin',
+                                model?.player?.name ?? 'Anonymous',
                                 style: Theme.of(context).textTheme.headline1,
                               ),
                               Text(
-                                'hectorbellerin@gmail.com ✅',
+                                model.email,
                                 style: Theme.of(context).textTheme.subtitle1,
                               ),
+                              Text(
+                                model?.player?.phoneNumber ?? '',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                              IconButton(
+                                iconSize: 16,
+                                icon: const FaIcon(FontAwesomeIcons.pen),
+                                onPressed: () => model.moveToEditView(context),
+                              )
                             ],
                           ),
                         ],

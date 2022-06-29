@@ -1,8 +1,9 @@
 import 'package:fimii/enums/view_state.dart';
+import 'package:fimii/models/post.dart';
 import 'package:fimii/scoped_models/post_model.dart';
 import 'package:fimii/ui/views/post/detail_post_view.dart';
-import 'package:fimii/ui/views/post/new_post_view.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import '../base_view.dart';
 
 class PostView extends StatelessWidget {
@@ -18,10 +19,10 @@ class PostView extends StatelessWidget {
   }
 
   Widget viewOptions(PostModel model, context) {
-    Widget postWidget = GestureDetector(
+    Widget postWidget(Post post) => GestureDetector(
       onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const DetailPostView()));
+            MaterialPageRoute(builder: (context) => DetailPostView(id: post.id)));
       },
       child: Card(
         child: Padding(
@@ -42,12 +43,12 @@ class PostView extends StatelessWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         // Name
-                        Text("Justin"),
+                        Text(post.email),
 
                         // Time
-                        Text("3 days ago")
+                        Text(post.createdAt)
                       ],
                     ),
                   ),
@@ -59,15 +60,14 @@ class PostView extends StatelessWidget {
               ),
 
               // Post text
-              const Text(
-                  'FC DLKS toàn sinh viên trình độ yếu (siêu yếu), đá vì sức khỏe, không hề chân tay miệng.'),
+               Text(post.description),
 
               const SizedBox(
                 height: 12,
               ),
 
               // Team image
-              Image.asset('assets/img/foo-team.jpg'),
+              post?.picture == null ? Container(): Image.network(post.picture),
 
               const SizedBox(
                 height: 12,
@@ -79,47 +79,56 @@ class PostView extends StatelessWidget {
                 children: [
                   // Like
                   Row(
-                    children: const [
-                      Icon(
-                        Icons.favorite,
-                        size: 25,
-                        color: Colors.red,
+                    children: [
+                       GestureDetector(
+                         onTap: () => model.toggleReaction(post),
+                         child: Icon(
+                          post.reactionEmails.contains(model.email) ?
+                          Icons.favorite_outlined : Icons.favorite_outline,
+                          size: 25,
+                          color: Colors.red,
                       ),
-                      SizedBox(
+                       ),
+                      const SizedBox(
                         width: 2,
                       ),
-                      Text("4"),
+                      Text(post?.reactionCount ?? "0"),
                     ],
                   ),
 
                   // Comments
                   Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.web,
                         size: 25,
                         color: Colors.lightBlueAccent,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 2,
                       ),
-                      Text("2"),
+                      Text(post?.commentCount ?? "0"),
                     ],
                   ),
 
                   // Share
-                  Row(
-                    children: const [
-                      Icon(
-                        Icons.share,
-                        size: 25,
-                        color: Colors.lightBlue,
-                      ),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      Text("Share"),
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Share.share(post.description ?? 'Check it out');
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.share,
+                          size: 25,
+                          color: Colors.lightBlue,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text("Share"),
+                      ],
+                    ),
                   ),
                 ],
               )
@@ -153,6 +162,7 @@ class PostView extends StatelessWidget {
                     child: Image.asset('assets/img/logo-removebg.png'),
                   ),
 
+                  // To create a new post
                   Row(
                     children: [
                       Container(
@@ -162,7 +172,7 @@ class PostView extends StatelessWidget {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               image: NetworkImage(
-                                  'https://i.pinimg.com/564x/11/19/0e/11190ec93e892a6e8bbbc85bea332148.jpg'),
+                                  'https://media.istockphoto.com/vectors/missing-image-of-a-person-placeholder-vector-id1288129985?k=20&m=1288129985&s=612x612&w=0&h=OHfZHfKj0oqIDMl5f_oRqH13MHiB63nUmySYILbWbjE='),
                               fit: BoxFit.cover,
                             )),
                       ),
@@ -180,24 +190,17 @@ class PostView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NewPostView()));
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
+                          onTap: () => model.moveToNewPostView(context),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
-                                "Hey Hector, tell the world what you're thinking..."),
+                                "Hey ${model.email}, tell the world what you're thinking..."),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  postWidget,
-                  postWidget,
-                  postWidget,
+                  ...model.allPosts.map((e) => postWidget(e))
                 ],
               ),
             ),
